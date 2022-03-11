@@ -8,7 +8,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.gerija.cinema.R
-import com.gerija.cinema.data.firebase.User
+import com.gerija.cinema.model.firebase.User
 import com.gerija.cinema.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -16,25 +16,23 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var binding: ActivityMainBinding
-
-
+    private lateinit var databaseFirebase: DatabaseReference
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) {
         onSignInResult(it)
     }
 
-    private lateinit var database: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
-        database = Firebase.database.reference
 
+        databaseFirebase = Firebase.database.reference
         startAuthFirebase()
     }
 
@@ -65,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
             authUser?.let {
                 val firebaseUser = User(it.email.toString(), it.uid)
-                database.child("users").child(it.uid).setValue(firebaseUser)
+                databaseFirebase.child("users").child(it.uid).setValue(firebaseUser)
 
                 val intent = Intent(this, MoviesActivity::class.java)
                 startActivity(intent)

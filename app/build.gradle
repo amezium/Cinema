@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
-    id 'kotlin-kapt'
 }
 
 android {
@@ -74,7 +73,4 @@ dependencies {
     //Youtube Player
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.0.1'
 
-    //Dagger
-    implementation 'com.google.dagger:dagger:2.35.1'
-    kapt 'com.google.dagger:dagger-compiler:2.35.1'
 }
